@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Hello World!</h1>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <h2><%= subTitle %></h2>
+
+
     <p><%= subTitle %></p>
-  </body>
+    <ul>
+      <% data.forEach(function(item) { %>
+          <li><%= item.columnName %></li> <!-- Replace 'columnName' with your actual column name -->
+      <% }); %>
+    </ul>
+</body>
 </html>
