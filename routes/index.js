@@ -2,11 +2,23 @@ const express = require('express');
 const router = express.Router();
 const { poolPromise } = require('../db'); // Import the database connection pool
 
-// GET Home Page with Login
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Login Page' });
-});
+// GET Home Page with Login and Opportunities
+router.get('/', async (req, res, next) => {
+  try {
+    const pool = await poolPromise;
 
+    // Fetch opportunities from the database
+    const opportunitiesResult = await pool.request().query('SELECT * FROM Opportunities');
+
+    // Render the view with opportunities data
+    res.render('index', {
+      title: 'Home Page',
+      opportunities: opportunitiesResult.recordset
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 // POST Login Logic
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
