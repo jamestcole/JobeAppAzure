@@ -1,5 +1,4 @@
-/* public/stylesheets/style.css */
-
+/* Base styles */
 body {
   font-family: 'Georgia', serif;
   font-size: 16px;
@@ -22,6 +21,7 @@ header h1 {
   font-size: 24px;
 }
 
+/* Main content */
 main {
   max-width: 960px;
   margin: 20px auto;
@@ -45,12 +45,15 @@ h2 {
   margin-top: 20px;
 }
 
+/* Form styles */
 form {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: auto;
 }
 
 input[type="text"], input[type="password"], input[type="email"], textarea {
@@ -77,6 +80,7 @@ button:hover {
   background-color: #003d7a; /* Darker blue for hover */
 }
 
+/* List and item styles */
 ul {
   list-style-type: none;
   padding: 0;
@@ -101,29 +105,30 @@ li img {
   border-radius: 4px;
 }
 
+/* Footer styles */
 footer {
   background-color: #005ea5; /* GOV.UK blue */
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-    font-size: 14px;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 14px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }
 
 footer p {
-    margin: 0;
+  margin: 0;
 }
 
-/* public/stylesheets/style.css */
-
-/* Existing styles... */
-
+/* Navigation styles */
 nav {
   margin: 20px 0;
   display: flex;
   justify-content: space-around;
+  background-color: #f3f4f6; /* Light grey */
+  padding: 10px;
+  border-radius: 4px;
 }
 
 nav a {
@@ -136,25 +141,48 @@ nav a:hover {
   text-decoration: underline;
 }
 
-form {
-  max-width: 600px;
-  margin: auto;
-}
-
+/* Form enhancements */
 form label {
   display: block;
   margin-top: 10px;
   font-weight: bold;
 }
 
-form input, form textarea {
-  width: 100%;
-  margin-top: 5px;
+form input, form textarea, form button {
+  display: block;
+  margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 form button {
-  margin-top: 10px;
+  background-color: #007cba;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dashboard button alignment */
+.dashboard-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.dashboard-buttons a {
+  flex: 1;
+  text-align: center;
+  padding: 10px 15px;
+  margin: 0 5px;
+  background-color: #005ea5; /* GOV.UK blue */
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.dashboard-buttons a:hover {
+  background-color: #003d7a; /* Darker blue for hover */
 }
