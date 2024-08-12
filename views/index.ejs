@@ -7,15 +7,16 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-    <h1><%= title %></h1>
-    <h2><%= subTitle %></h2>
-
-
-    <p><%= subTitle %></p>
-    <ul>
+  <h1><%= title %></h1>
+  <p><%= subTitle %></p>
+  <ul>
+    <% if (data && data.length > 0) { %>
       <% data.forEach(function(item) { %>
-          <li><%= item.columnName %></li> <!-- Replace 'columnName' with your actual column name -->
+        <li><%= item.Username %></li> <!-- Replace 'Username' with the actual column name -->
       <% }); %>
-    </ul>
+    <% } else { %>
+      <li>No data available</li>
+    <% } %>
+  </ul>
 </body>
 </html>
