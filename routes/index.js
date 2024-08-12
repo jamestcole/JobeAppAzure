@@ -1,18 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const { poolPromise } = require('../db'); // Import the database connection pool
+const auth = require('../middleware/auth'); // Import the authentication middleware
 
-// GET Home Page with Login and Opportunities
-router.get('/', async (req, res, next) => {
+/* GET home page with login and opportunities. */
+router.get('/', async function(req, res, next) {
   try {
     const pool = await poolPromise;
 
     // Fetch opportunities from the database
-    const opportunitiesResult = await pool.request().query('SELECT * FROM Opportunities');
+    const opportunitiesResult = await pool.request()
+      .query('SELECT * FROM Opportunities');
+
+    // Check if user is logged in
+    const userLoggedIn = req.session && req.session.user;
+    const userName = userLoggedIn ? req.session.user.username : '';
 
     // Render the view with opportunities data
     res.render('index', {
       title: 'Home Page',
+      userLoggedIn: !!userLoggedIn, // Boolean indicating if the user is logged in
+      userName: userName,
       opportunities: opportunitiesResult.recordset
     });
   } catch (err) {
