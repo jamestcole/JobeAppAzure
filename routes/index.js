@@ -28,31 +28,44 @@ router.get('/', async function(req, res, next) {
   }
 });
 // POST Login Logic
-router.post('/login', async (req, res) => {
+router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
-  // Example authentication logic (replace with actual validation)
-  if (username === 'testuser' && password === 'password') {
-    res.redirect('/dashboard');
-  } else {
-    res.redirect('/');
-  }
+  // Implement your authentication logic here
+  // For now, we'll just set a dummy session
+  req.session.user = { username: username };
+
+  // Redirect to home page after login
+  res.redirect('/');
 });
 
+
 // GET Dashboard Page
-router.get('/dashboard', async (req, res, next) => {
+router.get('/dashboard', auth, async (req, res, next) => {
   try {
     const pool = await poolPromise;
+    const userId = req.session.user.id; // Assuming user ID is stored in session
 
-    // Fetch opportunities and user-related data
+    // Fetch opportunities
     const opportunitiesResult = await pool.request().query('SELECT * FROM Opportunities');
-    // Placeholder for fetching user-specific data
-    const user = { name: 'testuser' }; // Replace with actual user fetching logic
+    
+    // Fetch user-specific applications
+    const applicationsResult = await pool.request()
+      .input('userId', sql.Int, userId)
+      .query('SELECT * FROM Applications WHERE UserId = @userId');
 
+    // Fetch user-specific listings
+    const listingsResult = await pool.request()
+      .input('userId', sql.Int, userId)
+      .query('SELECT * FROM Listings WHERE UserId = @userId');
+
+    // Pass the data to the dashboard view
     res.render('dashboard', {
       title: 'User Dashboard',
       opportunities: opportunitiesResult.recordset,
-      user
+      applications: applicationsResult.recordset,
+      listings: listingsResult.recordset,
+      user: req.session.user // Make sure user info is available for the view
     });
   } catch (err) {
     next(err);

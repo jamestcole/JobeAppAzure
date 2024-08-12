@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <h1><%= title %></h1>
+        <nav>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/opportunities">Opportunities</a></li>
+                <li><a href="/applications">My Applications</a></li>
+                <li><a href="/listings">My Listings</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome, <%= user.name %></h2>
+
+        <section>
+            <h3>Opportunities</h3>
+            <ul>
+                <% opportunities.forEach(function(opportunity) { %>
+                    <li>
+                        <img src="<%= opportunity.Image %>" alt="<%= opportunity.Name %>">
+                        <div>
+                            <h4><%= opportunity.Name %></h4>
+                            <p><%= opportunity.Description %></p>
+                            <p><strong>Requirements:</strong> <%= opportunity.Requirements %></p>
+                            <p><strong>Duration:</strong> <%= opportunity.Duration %></p>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <section>
+            <h3>My Applications</h3>
+            <ul>
+                <% applications.forEach(function(application) { %>
+                    <li>
+                        <h4>Application ID: <%= application.Id %></h4>
+                        <p><strong>Opportunity:</strong> <%= application.OpportunityName %></p>
+                        <p><strong>Status:</strong> <%= application.Status %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <section>
+            <h3>My Listings</h3>
+            <ul>
+                <% listings.forEach(function(listing) { %>
+                    <li>
+                        <h4>Listing ID: <%= listing.Id %></h4>
+                        <p><strong>Opportunity:</strong> <%= listing.OpportunityName %></p>
+                        <p><strong>Description:</strong> <%= listing.Description %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Create New Opportunity</h3>
+            <form action="/create-opportunity" method="post">
+                <input type="text" name="name" placeholder="Opportunity Name" required>
+                <textarea name="description" placeholder="Description" required></textarea>
+                <input type="url" name="image" placeholder="Image URL">
+                <input type="text" name="requirements" placeholder="Requirements">
+                <input type="text" name="duration" placeholder="Duration">
+                <button type="submit">Create Opportunity</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Your Company</p>
+    </footer>
+    <script src="/javascripts/main.js"></script>
+</body>
+</html>

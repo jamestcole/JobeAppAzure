@@ -22,31 +22,35 @@
                 </form>
             </section>
         <% } else { %>
-            <!-- Display opportunities and user information if logged in -->
+            <!-- Display user dashboard if logged in -->
             <section id="user-dashboard">
                 <p>Welcome, <%= userName %>!</p>
-                <a href="/opportunities">View Opportunities</a>
-                <a href="/applications">Your Applications</a>
-                <a href="/listings">Your Listings</a>
-                <a href="/create-opportunity">Create New Opportunity</a>
-            </section>
-            <section id="opportunities-list">
-                <h2>Opportunities</h2>
-                <ul>
-                    <% opportunities.forEach(function(opportunity) { %>
-                        <li>
-                            <img src="<%= opportunity.Image %>" alt="<%= opportunity.Name %>" style="width:100px; height:100px;">
-                            <div>
-                                <h3><%= opportunity.Name %></h3>
-                                <p><%= opportunity.Description %></p>
-                                <p><strong>Requirements:</strong> <%= opportunity.Requirements %></p>
-                                <p><strong>Duration:</strong> <%= opportunity.Duration %></p>
-                            </div>
-                        </li>
-                    <% }); %>
-                </ul>
+                <nav>
+                    <a href="/opportunities">View Opportunities</a>
+                    <a href="/applications">Your Applications</a>
+                    <a href="/listings">Your Listings</a>
+                    <a href="/create-opportunity">Create New Opportunity</a>
+                </nav>
             </section>
         <% } %>
+        
+        <!-- Always display opportunities -->
+        <section id="opportunities-list">
+            <h2>Opportunities</h2>
+            <ul>
+                <% opportunities.forEach(function(opportunity) { %>
+                    <li>
+                        <img src="<%= opportunity.Image %>" alt="<%= opportunity.Name %>" style="width:100px; height:100px;">
+                        <div>
+                            <h3><%= opportunity.Name %></h3>
+                            <p><%= opportunity.Description %></p>
+                            <p><strong>Requirements:</strong> <%= opportunity.Requirements %></p>
+                            <p><strong>Duration:</strong> <%= opportunity.Duration %></p>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 Your Company</p>
@@ -54,5 +58,4 @@
     <script src="/javascripts/main.js"></script>
 </body>
 </html>
-
 
