@@ -5,7 +5,7 @@ param location string = resourceGroup().location // Bicep function returning the
 param textToReplaceSubtitleWith string = 'This is my default subtitle text. Boring, right?'
 
 @description('Branch of the repository for deployment.')
-param repositoryBranch string = 'test'
+param repositoryBranch string = 'main'
 
 // App Service Plan Creation
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
