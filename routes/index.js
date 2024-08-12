@@ -28,16 +28,18 @@ router.get('/', async function(req, res, next) {
   }
 });
 // POST Login Logic
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
 
-  // Implement your authentication logic here
-  // For now, we'll just set a dummy session
-  req.session.user = { username: username };
-
-  // Redirect to home page after login
-  res.redirect('/');
+  // Dummy authentication logic - replace with your actual logic
+  if (username === 'testuser' && password === 'password') {
+    req.session.user = { username: username }; // Set session user
+    res.redirect('/dashboard'); // Redirect to dashboard after login
+  } else {
+    res.redirect('/'); // Redirect back to home if login fails
+  }
 });
+
 
 
 // GET Dashboard Page
