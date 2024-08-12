@@ -41,6 +41,22 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
           name: 'WEBSITE_NODE_DEFAULT_VERSION' // Set the default node version
           value: '~20'
         }
+        {
+          name: 'DB_SERVER'
+          value: sqlServer.name
+        }
+        {
+          name: 'DB_NAME'
+          value: sqlDatabase.name
+        }
+        {
+          name: 'DB_USER'
+          value: 'sqladmin' // Or consider retrieving from a secure place
+        }
+        {
+          name: 'DB_PASS'
+          value: 'Password123!' // Use a secure method for passwords
+        }
       ]
       publicNetworkAccess: 'Enabled'
     }
@@ -58,3 +74,38 @@ resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
   }
 }
 
+// the following is needed for the database backend
+
+// Define the storage account
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: 'jobsitestoracc'
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+}
+
+// Define the SQL Server
+resource sqlServer 'Microsoft.Sql/servers@2021-02-01-preview' = {
+  name: 'jobsitesqlserver'
+  location: location
+  properties: {
+    administratorLogin: 'sqladmin'
+    administratorLoginPassword: 'Password123!' // Use a secure password in practice
+  }
+}
+
+// Define the SQL database
+resource sqlDatabase 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
+  name: 'jobsite-db'
+  location: location
+  parent: sqlServer
+  properties: {
+    collation: 'SQL_Latin1_General_CP1_CI_AS'
+    maxSizeBytes: 2147483648
+  }
+  sku: {
+    name: 'S0'
+  }
+}
