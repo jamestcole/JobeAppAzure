@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { poolPromise } = require('../db'); // Import the database connection
+const sql = require('../db');// Import the database connection
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
