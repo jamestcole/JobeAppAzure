@@ -25,7 +25,7 @@ app.use(session({
   secret: 'your-secret-key', // Replace with a secure secret key
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true } // Set to true if using HTTPS
+  cookie: { secure: false } // Set to true if using HTTPS
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
