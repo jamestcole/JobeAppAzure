@@ -41,6 +41,22 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
           name: 'WEBSITE_NODE_DEFAULT_VERSION' // Set the default node version
           value: '~20'
         }
+        {
+          name: 'DB_SERVER'
+          value: sqlServer.name
+        }
+        {
+          name: 'DB_NAME'
+          value: sqlDatabase.name
+        }
+        {
+          name: 'DB_USER'
+          value: 'sqladmin' // Or consider retrieving from a secure place
+        }
+        {
+          name: 'DB_PASS'
+          value: 'Password123!' // Use a secure method for passwords
+        }
       ]
       publicNetworkAccess: 'Enabled'
     }
