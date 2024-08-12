@@ -81,13 +81,15 @@ button:hover {
 }
 
 /* List and item styles */
-ul {
-  list-style-type: none;
+nav ul {
+  display: flex;              /* Use flexbox to arrange items in a row */
+  justify-content: space-around; /* Evenly space out the buttons */
+  list-style-type: none;      /* Remove bullet points */
   padding: 0;
-  margin: 0;
+  margin: 20px 0;             /* Space above and below the navigation */
 }
 
-li {
+nav li {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -133,12 +135,18 @@ nav {
 
 nav a {
   text-decoration: none;
-  color: #005ea5; /* GOV.UK blue */
+  color: #005ea5;             /* GOV.UK blue */
   font-weight: bold;
+  padding: 10px 20px;         /* Add padding to the buttons */
+  border-radius: 4px;         /* Slightly round the corners */
+  background-color: #f3f2f1;  /* Light grey background */
+  border: 1px solid #ddd;     /* Light border around the buttons */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
 }
 
 nav a:hover {
   text-decoration: underline;
+  background-color: #e2e1df;  /* Slightly darker grey on hover */
 }
 
 /* Form enhancements */
@@ -157,10 +165,16 @@ form input, form textarea, form button {
 }
 
 form button {
-  background-color: #007cba;
+  background-color: #005ea5; /* GOV.UK blue */
   color: white;
   border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
   cursor: pointer;
+}
+
+form button:hover {
+  background-color: #003d7a; /* Darker blue on hover */
 }
 
 /* Dashboard button alignment */
