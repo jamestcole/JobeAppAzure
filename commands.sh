@@ -1,2 +1,0 @@
-az group create --name practicenodeapp1 --location "France Central"
-az deployment group create --resource-group my-rg --template-file deploy-webapp.bicep --parameters parameters.test.json --confirm-with-what-if
