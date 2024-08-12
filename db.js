@@ -10,6 +10,7 @@ const config = {
   }
 };
 
+console.log('Database connection string:', config.connectionString);
 // Connect to the database
 sql.connect(config).then(() => {
   console.log('Connected to Azure SQL Database.');
