@@ -115,3 +115,46 @@ footer {
 footer p {
     margin: 0;
 }
+
+/* public/stylesheets/style.css */
+
+/* Existing styles... */
+
+nav {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav a {
+  text-decoration: none;
+  color: #005ea5; /* GOV.UK blue */
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+form {
+  max-width: 600px;
+  margin: auto;
+}
+
+form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+form input, form textarea {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  margin-top: 10px;
+}
