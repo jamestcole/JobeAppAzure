@@ -1,22 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title><%= title %></title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .opportunity {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .opportunity img {
+      max-width: 100px;
+      margin-right: 15px;
+    }
+    .opportunity-description {
+      max-width: calc(100% - 120px); /* Adjust width to fit image */
+    }
+  </style>
 </head>
 <body>
-  <h1><%= title %></h1>
-  <p><%= subTitle %></p>
-  <ul>
-    <% if (data && data.length > 0) { %>
-      <% data.forEach(function(item) { %>
-        <li><%= item.Username %></li> <!-- Replace 'Username' with the actual column name -->
+  <!-- Login Form -->
+  <div class="login-container">
+    <h1><%= title %></h1>
+    <form action="/login" method="post">
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username" required><br><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password" required><br><br>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
+  <!-- Opportunities List -->
+  <div class="opportunities-list">
+    <h2>Available Opportunities</h2>
+    <% if (opportunities && opportunities.length > 0) { %>
+      <% opportunities.forEach(function(opportunity) { %>
+        <div class="opportunity">
+          <img src="<%= opportunity.Image %>" alt="<%= opportunity.Name %>">
+          <div class="opportunity-description">
+            <h3><%= opportunity.Name %></h3>
+            <p><%= opportunity.Description %></p>
+            <p><strong>Requirements:</strong> <%= opportunity.Requirements %></p>
+            <p><strong>Duration:</strong> <%= opportunity.Duration %></p>
+          </div>
+        </div>
       <% }); %>
     <% } else { %>
-      <li>No data available</li>
+      <p>No opportunities available at the moment.</p>
     <% } %>
-  </ul>
+  </div>
 </body>
 </html>
