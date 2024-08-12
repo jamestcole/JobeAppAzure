@@ -52,7 +52,7 @@ resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
   parent: appService
   name: 'web'
   properties: {
-    repoUrl: 'https://github.com/FarzamMohammadi/hello-world'
+    repoUrl: 'https://github.com/jamestcole/JobeAppAzure.git'
     branch: repositoryBranch
     isManualIntegration: true
   }
