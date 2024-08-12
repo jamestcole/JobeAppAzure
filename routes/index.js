@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { poolPromise } = require('../db'); // Import the database connection pool
+const { poolPromise, sql } = require('../db'); // Import the database connection pool
 const auth = require('../middleware/auth'); // Import the authentication middleware
 
 /* GET home page with login and opportunities. */
