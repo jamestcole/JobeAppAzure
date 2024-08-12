@@ -1,22 +1,30 @@
-require('dotenv').config();
 const sql = require('mssql');
 
-// Retrieve connection string from environment variable
+// Configuration for the SQL database
 const config = {
-  connectionString: process.env.DB_CONNECTION_STRING,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_NAME,
   options: {
-    encrypt: true, // Encrypt data in transit
-    trustServerCertificate: false // Set to true if you face certificate issues
+    encrypt: true, // Use encryption
+    trustServerCertificate: false // Trust server certificate
   }
 };
 
-console.log('Database connection string:', config.connectionString);
-// Connect to the database
-sql.connect(config).then(() => {
-  console.log('Connected to Azure SQL Database.');
-}).catch(err => {
-  console.error('Database connection failed:', err.message);
-});
+// Create a pool connection to the database
+const poolPromise = new sql.ConnectionPool(config)
+  .connect()
+  .then(pool => {
+    console.log('Connected to SQL Server');
+    return pool;
+  })
+  .catch(err => {
+    console.error('Database connection failed:', err);
+    process.exit(1); // Exit process if unable to connect
+  });
 
-module.exports = sql;
-
+module.exports = {
+  sql,
+  poolPromise
+};
