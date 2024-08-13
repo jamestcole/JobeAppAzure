@@ -78,24 +78,15 @@ button:hover {
   background-color: #003d7a; /* Darker blue for hover */
 }
 
-/* List and item styles */
 nav ul {
-  display: flex;              /* Use flexbox to arrange items in a row */
-  justify-content: space-around; /* Evenly space out the buttons */
-  list-style-type: none;      /* Remove bullet points */
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  list-style-type: none;
   padding: 0;
-  margin: 20px 0;             /* Space above and below the navigation */
 }
 
 nav li {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 15px;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  margin: 0 10px; /* Add spacing between buttons */
 }
 
 
@@ -136,7 +127,7 @@ footer p {
 nav {
   margin: 20px 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: center; /* Ensure the nav is centered */
   background-color: #f3f4f6; /* Light grey */
   padding: 10px;
   border-radius: 4px;
@@ -144,12 +135,12 @@ nav {
 
 nav a {
   text-decoration: none;
-  color: #005ea5;             /* GOV.UK blue */
+  color: #005ea5; /* GOV.UK blue */
   font-weight: bold;
-  padding: 10px 20px;         /* Add padding to the buttons */
-  border-radius: 4px;         /* Slightly round the corners */
-  background-color: #f3f2f1;  /* Light grey background */
-  border: 1px solid #ddd;     /* Light border around the buttons */
+  padding: 10px 20px; /* Add padding to the buttons */
+  border-radius: 4px; /* Slightly round the corners */
+  background-color: #f3f2f1; /* Light grey background */
+  border: 1px solid #ddd; /* Light border around the buttons */
   transition: background-color 0.3s ease; /* Smooth transition on hover */
 }
 
@@ -189,12 +180,13 @@ form button:hover {
 /* Dashboard button alignment */
 .dashboard-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Ensure the buttons are centered horizontally */
   margin-top: 20px;
 }
 
 .dashboard-buttons a {
   flex: 1;
+  max-width: 150px; /* Ensure buttons don't stretch too wide */
   text-align: center;
   padding: 10px 15px;
   margin: 0 5px;
@@ -205,7 +197,6 @@ form button:hover {
   font-size: 16px;
   font-weight: bold;
 }
-
 .dashboard-buttons a:hover {
   background-color: #003d7a; /* Darker blue for hover */
 }
