@@ -89,7 +89,20 @@ nav li {
   margin: 0 10px; /* Add spacing between buttons */
 }
 
+li div {
+  flex-grow: 1; /* Allow the text to take up the remaining space */
+}
 
+li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
 /* Adjust main content styling */
 main {
   max-width: 960px;
@@ -103,8 +116,9 @@ main {
 li img {
   width: 80px;
   height: 60px;
-  margin-right: 15px;
+  margin-right: 15px; /* Add space between the image and text */
   border-radius: 4px;
+  flex-shrink: 0; /* Prevent the image from shrinking */
 }
 
 /* Footer styles */
