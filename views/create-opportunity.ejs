@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Opportunity</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <h1>Create New Opportunity</h1>
+    </header>
+    <main>
+        <form action="/submit-opportunity" method="post" enctype="multipart/form-data">
+            <label for="name">Opportunity Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="image">Image URL:</label>
+            <input type="text" id="image" name="image">
+
+            <label for="requirements">Requirements:</label>
+            <textarea id="requirements" name="requirements" required></textarea>
+
+            <label for="duration">Duration:</label>
+            <input type="text" id="duration" name="duration" required>
+
+            <button type="submit">Submit Opportunity</button>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,65 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title><%= title %></title>
-  <style>
-    /* Add some basic styling */
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .login-container {
-      max-width: 400px;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    .opportunity {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-    .opportunity img {
-      max-width: 100px;
-      margin-right: 15px;
-    }
-    .opportunity-description {
-      max-width: calc(100% - 120px); /* Adjust width to fit image */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-  <!-- Login Form -->
-  <div class="login-container">
-    <h1><%= title %></h1>
-    <form action="/login" method="post">
-      <label for="username">Username:</label><br>
-      <input type="text" id="username" name="username" required><br><br>
-      <label for="password">Password:</label><br>
-      <input type="password" id="password" name="password" required><br><br>
-      <input type="submit" value="Login">
-    </form>
-  </div>
-
-  <!-- Opportunities List -->
-  <div class="opportunities-list">
-    <h2>Available Opportunities</h2>
-    <% if (opportunities && opportunities.length > 0) { %>
-      <% opportunities.forEach(function(opportunity) { %>
-        <div class="opportunity">
-          <img src="<%= opportunity.Image %>" alt="<%= opportunity.Name %>">
-          <div class="opportunity-description">
-            <h3><%= opportunity.Name %></h3>
-            <p><%= opportunity.Description %></p>
-            <p><strong>Requirements:</strong> <%= opportunity.Requirements %></p>
-            <p><strong>Duration:</strong> <%= opportunity.Duration %></p>
-          </div>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>No opportunities available at the moment.</p>
-    <% } %>
-  </div>
+    <header>
+        <h1><%= title %></h1>
+    </header>
+    <main>
+        <% if (!userLoggedIn) { %>
+            <!-- Display login form if the user is not logged in -->
+            <section id="login-form">
+                <h2>Login</h2>
+                <form action="/login" method="post">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+            </section>
+        <% } else { %>
+            <!-- Display user dashboard if logged in -->
+            <section id="user-dashboard">
+                <p>Welcome, <%= userName %>!</p>
+                <nav>
+                    <a href="/opportunities">View Opportunities</a>
+                    <a href="/applications">Your Applications</a>
+                    <a href="/listings">Your Listings</a>
+                    <a href="/create-opportunity">Create New Opportunity</a>
+                </nav>
+            </section>
+        <% } %>
+        
+        <!-- Always display opportunities -->
+        <section id="opportunities-list">
+            <h2>Opportunities</h2>
+            <ul>
+                <% opportunities.forEach(function(opportunity) { %>
+                    <li>
+                        <img src="<%= opportunity.Image %>" alt="<%= opportunity.Name %>" style="width:100px; height:100px;">
+                        <div>
+                            <h3><%= opportunity.Name %></h3>
+                            <p><%= opportunity.Description %></p>
+                            <p><strong>Requirements:</strong> <%= opportunity.Requirements %></p>
+                            <p><strong>Duration:</strong> <%= opportunity.Duration %></p>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Your Company</p>
+    </footer>
+    <script src="/javascripts/main.js"></script>
 </body>
 </html>
+
