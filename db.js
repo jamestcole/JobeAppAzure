@@ -1,9 +1,10 @@
 const sql = require('mssql');
+require('dotenv').config(); // Load environment variables from .env file
 
 // Configuration for the SQL database
 const config = {
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  password: process.env.DB_PASS,
   server: process.env.DB_SERVER,
   database: process.env.DB_NAME,
   options: {
