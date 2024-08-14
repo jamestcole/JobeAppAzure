@@ -104,11 +104,8 @@ li {
 }
 
 /* Adjust main content styling */
-/* Ensure main container is displayed as flex */
+/* Adjust main content styling */
 main {
-  display: flex;
-  justify-content: space-between; /* Space between the forms */
-  gap: 20px; /* Gap between the forms */
   max-width: 960px;
   margin: 20px auto;
   padding: 20px;
@@ -116,7 +113,12 @@ main {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
+/* Flex container for forms */
+.forms-container {
+  display: flex;
+  gap: 20px; /* Gap between forms */
+  flex-wrap: wrap; /* Ensure forms wrap on smaller screens */
+}
 /* Style for form sections to ensure they have equal width */
 #login-form, #signup-form {
   flex: 1; /* Make forms take up equal space */
@@ -227,7 +229,10 @@ form button:hover {
 .dashboard-buttons a:hover {
   background-color: #003d7a; /* Darker blue for hover */
 }
-
+/* Ensure opportunities list is below the forms */
+#opportunities-list {
+  margin-top: 20px; /* Space above the opportunities list */
+}
 /* Opportunities List */
 #opportunities-list ul {
   list-style: none;

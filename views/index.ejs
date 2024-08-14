@@ -11,6 +11,7 @@
         <h1><%= title %></h1>
     </header>
     <main>
+        <div class="forms-container">
         <% if (!userLoggedIn) { %>
             <!-- Display login form if the user is not logged in -->
             <section id="login-form">
@@ -48,7 +49,7 @@
                 </nav>
             </section>
         <% } %>
-        
+        </div>
         <!-- Always display opportunities -->
         <section id="opportunities-list">
             <h2>Opportunities</h2>
