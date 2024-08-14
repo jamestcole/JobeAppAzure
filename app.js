@@ -47,8 +47,11 @@ router.get('/signup', (req, res) => {
   res.render('signup'); // Make sure you have a signup.ejs file
 });
 
-// Handle signup form submission
-router.post('/signup', async (req, res, next) => {
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+// Signup route (moved into indexRouter)
+indexRouter.post('/signup', async (req, res, next) => {
   try {
     const { username, password, age, sex, status } = req.body;
 
@@ -78,8 +81,7 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -43,7 +43,7 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
         }
         {
           name: 'DB_SERVER'
-          value: sqlServer.name
+          value: 'jobsitesqlserver.database.windows.net'
         }
         {
           name: 'DB_NAME'
