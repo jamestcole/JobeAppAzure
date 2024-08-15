@@ -9,7 +9,7 @@ const sql = require('mssql');
 const router = express.Router();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var authRouter = require('./routes/auth'); // Adjust path as needed
 var app = express();
 
 // Importing the db.js file to use the poolPromise
@@ -31,7 +31,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+app.use('/auth', authRouter);
 // Session middleware - should be placed before routes
 app.use(session({
   secret: 'your-secret-key', // Replace with a secure secret key
