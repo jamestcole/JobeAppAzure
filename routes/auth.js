@@ -67,20 +67,9 @@ router.post('/signup', async function(req, res, next) {
             .query('INSERT INTO Users (Username, Email, PasswordHash) VALUES (@username, @email, @password)');
 
         // Only redirect if the user was successfully created
-        if (username && email && password) {
-            req.session.user = { username };
-            return res.redirect('/signup');
-        } else {
-            // If something goes wrong, return to index page with an error message
-            return res.render('index', {
-                title: 'Login / Sign Up',
-                error: 'Signup failed. Please try again.',
-                username,
-                email,
-                userLoggedIn: false,
-                opportunities: [] // Add your opportunities data here if needed
-            });
-        }
+
+        req.session.user = { username };
+        return res.redirect('/signup');
 
     } catch (err) {
         console.error('Signup failed:', err);
