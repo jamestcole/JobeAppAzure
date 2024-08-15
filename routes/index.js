@@ -59,24 +59,37 @@ router.post('/auth', async function(req, res, next) {
 router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
 
-  // Dummy authentication logic - replace with your actual logic
-  if (username === 'testuser' && password === 'password') {
-    req.session.user = { username: username }; // Set session user
-    res.redirect('/dashboard'); // Redirect to dashboard after login
-  } else {
-    res.redirect('/'); // Redirect back to home if login fails
-  }
-});
-// Route for the signup page
-router.get('/signup', (req, res) => {
-  // Extract data from query parameters
-  const { username, email } = req.query;
+  try {
+    // Get a connection from the pool
+    const pool = await poolPromise;
 
-  // Render the signup page with pre-filled data
-  res.render('signup', {
-      username: username || '',
-      email: email || ''
-  });
+    // Query user by username
+    const result = await pool.request()
+      .input('Username', sql.NVarChar, username)
+      .query('SELECT * FROM Users WHERE Username = @Username');
+
+    if (result.recordset.length > 0) {
+      const user = result.recordset[0];
+
+      // Compare password
+      const match = await bcrypt.compare(password, user.Password);
+
+      if (match) {
+        // Password is correct
+        req.session.user = { username: user.Username, id: user.Id }; // Set session user
+        res.redirect('/dashboard'); // Redirect to dashboard after login
+      } else {
+        // Authentication failed
+        res.redirect('/'); // Redirect back to home if login fails
+      }
+    } else {
+      // User not found
+      res.redirect('/'); // Redirect back to home if user not found
+    }
+  } catch (err) {
+    console.error('Login failed:', err);
+    next(err); // Forward error to the error handler
+  }
 });
 
 /* POST signup logic */
