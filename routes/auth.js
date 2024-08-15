@@ -56,30 +56,43 @@ router.post('/signup', async function(req, res, next) {
                 opportunities: [] 
             });
         }
-        // Optionally, you can start a session or handle as needed
-        req.session.user = { username };
-        // Username doesn't exist, render signup page
-        res.render('signup', {
-          title: 'Complete Your Registration',
-          username,
-          email: '',  // Email can be left empty or passed from index.ejs if available
-        });
-      // Render the signup.ejs page
+        // If the user doesn't exist, proceed with signup
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    } catch (err) {
-        // Handle database errors (like the UNIQUE constraint violation)
-        if (err.originalError && err.originalError.info && err.originalError.info.message.includes('Violation of UNIQUE KEY constraint')) {
+        // Insert the new user into the database
+        await pool.request()
+            .input('username', sql.NVarChar, username)
+            .input('email', sql.NVarChar, email)
+            .input('password', sql.NVarChar, hashedPassword)
+            .query('INSERT INTO Users (Username, Email, PasswordHash) VALUES (@username, @email, @password)');
+
+        // Only redirect if the user was successfully created
+        if (username && email && password) {
+            req.session.user = { username };
+            return res.redirect('/signup');
+        } else {
+            // If something goes wrong, return to index page with an error message
             return res.render('index', {
                 title: 'Login / Sign Up',
-                error: 'Username already exists. Please choose another username.',
+                error: 'Signup failed. Please try again.',
                 username,
                 email,
                 userLoggedIn: false,
-                opportunities: []  // Include the opportunities or other data needed
+                opportunities: [] // Add your opportunities data here if needed
             });
         }
-        // For any other errors, pass them to the error handler
-        next(err);
+
+    } catch (err) {
+        // Handle database errors (like the UNIQUE constraint violation)
+        console.error('Signup failed:', err);
+        return res.render('index', {
+            title: 'Login / Sign Up',
+            error: 'An error occurred during signup. Please try again.',
+            username: '',
+            email: '',
+            userLoggedIn: false,
+            opportunities: [] // Add your opportunities data here if needed
+        });
     }
   });
   
