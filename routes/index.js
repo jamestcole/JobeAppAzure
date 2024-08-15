@@ -15,20 +15,25 @@ router.get('/', async function(req, res, next) {
     // Check if user is logged in
     const userLoggedIn = req.session && req.session.user;
     const userName = userLoggedIn ? req.session.user.username : '';
-    const email = userLoggedIn ? req.session.user.email : ''; // Assuming email is also stored in session
+    
+    // Default values for username and email
+    const username = req.session && req.session.user ? req.session.user.username : '';
+    const email = req.session && req.session.user ? req.session.user.email : '';
 
-    // Render the view with opportunities data and user data
+    // Render the view with opportunities data
     res.render('index', {
       title: 'Home Page',
       userLoggedIn: !!userLoggedIn, // Boolean indicating if the user is logged in
       userName: userName,
-      email: email, // Pass the email to the view
+      username: username,
+      email: email,
       opportunities: opportunitiesResult.recordset
     });
   } catch (err) {
     next(err);
   }
 });
+
 
 
 // Route for the signup page
