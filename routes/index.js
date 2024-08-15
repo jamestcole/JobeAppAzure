@@ -34,6 +34,22 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+router.post('/auth', async function(req, res, next) {
+  try {
+    const { username, email, password, actionType } = req.body;
+
+    if (actionType === 'login') {
+      // Handle login logic
+    } else if (actionType === 'signup') {
+      // Handle signup logic
+      // Ensure fields are validated and processed appropriately
+    }
+
+    // Redirect or respond as needed
+  } catch (err) {
+    next(err);
+  }
+});
 
 
 // Route for the signup page
