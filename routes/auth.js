@@ -67,7 +67,7 @@ router.post('/signup', async function(req, res, next) {
             .query('INSERT INTO Users (Username, Email, PasswordHash) VALUES (@username, @email, @password)');
 
         // Only redirect if the user was successfully created
-        if (username && email && password) {
+        if (userCheck.recordset.length < 0) {
             req.session.user = { username };
             return res.redirect('/signup');
         } else {
