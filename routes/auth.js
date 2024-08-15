@@ -2,7 +2,19 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
 const { poolPromise } = require('../db'); // Adjust path as needed
+// Mock login and signup functions (replace with real logic)
+async function loginUser(username, password) {
+    // Replace with actual authentication logic
+    if (username === 'test' && password === 'password') {
+        return { success: true, username };
+    }
+    return { success: false, error: 'Invalid credentials' };
+}
 
+async function signupUser(username, email, password) {
+    // Replace with actual signup logic
+    return { success: true, username };
+}
 // Login route
 router.post('/login', async function(req, res, next) {
   try {
@@ -63,16 +75,45 @@ router.post('/signup', async function(req, res, next) {
     next(err);
   }
 });
-router.post('/auth', async function(req, res, next) {
+router.post('/auth', async function (req, res, next) {
     const { username, email, password, actionType } = req.body;
-  
-    if (actionType === 'login') {
-      // Handle login
-    } else if (actionType === 'signup') {
-      // Handle signup
-    } else {
-      res.redirect('/');
+
+    try {
+        if (actionType === 'login') {
+            const result = await loginUser(username, password);
+            if (result.success) {
+                req.session.user = { username: result.username };
+                res.redirect('/dashboard');
+            } else {
+                res.render('index', { 
+                    title: 'Login / Sign Up', 
+                    error: result.error, 
+                    username, 
+                    email, 
+                    userLoggedIn: false,
+                    opportunities: []  // Add your opportunities data here
+                });
+            }
+        } else if (actionType === 'signup') {
+            const result = await signupUser(username, email, password);
+            if (result.success) {
+                req.session.user = { username: result.username };
+                res.redirect('/dashboard');
+            } else {
+                res.render('index', { 
+                    title: 'Login / Sign Up', 
+                    error: result.error, 
+                    username, 
+                    email, 
+                    userLoggedIn: false,
+                    opportunities: []  // Add your opportunities data here
+                });
+            }
+        } else {
+            res.redirect('/');
+        }
+    } catch (err) {
+        next(err); // Pass the error to the error handler
     }
-  });
-  
+});
 module.exports = router;
