@@ -64,36 +64,7 @@ router.get('/signup', (req, res) => {
   });
 });
 
-/* POST signup logic */
-router.post('/signup', async (req, res, next) => {
-  try {
-    const { username, password, age, sex, status } = req.body;
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Get a connection from the pool
-    const pool = await poolPromise;
-
-    // Insert new user into the database
-    await pool.request()
-      .input('Username', sql.NVarChar, username)
-      .input('Password', sql.NVarChar, hashedPassword)
-      .input('Age', sql.Int, age)
-      .input('Sex', sql.NVarChar, sex)
-      .input('Status', sql.NVarChar, status)
-      .query(`
-        INSERT INTO Users (Username, Password, Age, Sex, Status)
-        VALUES (@Username, @Password, @Age, @Sex, @Status)
-      `);
-
-    // Redirect to login page after successful signup
-    res.redirect('/Signup');
-  } catch (err) {
-    console.error('Signup failed:', err);
-    next(err); // Forward error to the error handler
-  }
-});
 // POST Login Logic
 router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
