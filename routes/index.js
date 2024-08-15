@@ -28,9 +28,16 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-/* GET signup page */
+// Route for the signup page
 router.get('/signup', (req, res) => {
-  res.render('signup', { title: 'Sign Up' }); // Ensure you have signup.ejs in your views directory
+  // Extract data from query parameters
+  const { username, email } = req.query;
+
+  // Render the signup page with pre-filled data
+  res.render('signup', {
+      username: username || '',
+      email: email || ''
+  });
 });
 
 /* POST signup logic */

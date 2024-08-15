@@ -3,3 +3,4 @@
 uploaddb.bat
 jobsite-db-2024-8-13-1-34.bacpac
 importonly.bat
+dotenv.env
