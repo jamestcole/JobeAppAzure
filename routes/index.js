@@ -52,17 +52,7 @@ router.post('/auth', async function(req, res, next) {
 });
 
 
-// Route for the signup page
-router.get('/signup', (req, res) => {
-  // Extract data from query parameters
-  const { username, email } = req.query;
 
-  // Render the signup page with pre-filled data
-  res.render('signup', {
-      username: username || '',
-      email: email || ''
-  });
-});
 
 
 // POST Login Logic
