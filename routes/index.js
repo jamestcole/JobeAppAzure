@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { poolPromise, sql } = require('../db'); // Import the database connection pool
 const auth = require('../middleware/auth'); // Import the authentication middleware
-
+const bcrypt = require('bcryptjs');
 /* GET home page with login and opportunities. */
 router.get('/', async function(req, res, next) {
   try {

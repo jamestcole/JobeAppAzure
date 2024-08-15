@@ -47,6 +47,7 @@ router.get('/signup', (req, res) => {
   res.render('signup'); // Make sure you have a signup.ejs file
 });
 
+//
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
