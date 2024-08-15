@@ -31,7 +31,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/auth', authRouter);
+
 // Session middleware - should be placed before routes
 app.use(session({
   secret: 'your-secret-key', // Replace with a secure secret key
@@ -50,7 +50,7 @@ router.get('/signup', (req, res) => {
 //
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/auth', authRouter);
 // Signup route (moved into indexRouter)
 indexRouter.post('/signup', async (req, res, next) => {
   try {
