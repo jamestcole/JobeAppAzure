@@ -67,16 +67,48 @@ router.post('/login', async (req, res, next) => {
     res.redirect('/'); // Redirect back to home if login fails
   }
 });
+// Route for the signup page
+router.get('/signup', (req, res) => {
+  // Extract data from query parameters
+  const { username, email } = req.query;
 
-// POST Login Logic
-router.post('/signup', async (req, res, next) => {
-  const { username, password } = req.body;
-
-  req.session.user = { username: username }; // Set session user
-  res.redirect('/signup'); // Redirect to dashboard after login
-
+  // Render the signup page with pre-filled data
+  res.render('signup', {
+      username: username || '',
+      email: email || ''
+  });
 });
 
+/* POST signup logic */
+router.post('/signup', async (req, res, next) => {
+  try {
+    const { username, password, age, sex, status } = req.body;
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Get a connection from the pool
+    const pool = await poolPromise;
+
+    // Insert new user into the database
+    await pool.request()
+      .input('Username', sql.NVarChar, username)
+      .input('Password', sql.NVarChar, hashedPassword)
+      .input('Age', sql.Int, age)
+      .input('Sex', sql.NVarChar, sex)
+      .input('Status', sql.NVarChar, status)
+      .query(`
+        INSERT INTO Users (Username, Password, Age, Sex, Status)
+        VALUES (@Username, @Password, @Age, @Sex, @Status)
+      `);
+
+    // Redirect to login page after successful signup
+    res.redirect('/Signup');
+  } catch (err) {
+    console.error('Signup failed:', err);
+    next(err); // Forward error to the error handler
+  }
+});
 
 // GET Dashboard Page
 router.get('/dashboard', auth, async (req, res, next) => {
