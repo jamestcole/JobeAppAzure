@@ -63,5 +63,16 @@ router.post('/signup', async function(req, res, next) {
     next(err);
   }
 });
-
+router.post('/auth', async function(req, res, next) {
+    const { username, email, password, actionType } = req.body;
+  
+    if (actionType === 'login') {
+      // Handle login
+    } else if (actionType === 'signup') {
+      // Handle signup
+    } else {
+      res.redirect('/');
+    }
+  });
+  
 module.exports = router;
