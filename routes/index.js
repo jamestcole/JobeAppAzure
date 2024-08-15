@@ -68,6 +68,14 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
+// POST Login Logic
+router.post('/signup', async (req, res, next) => {
+  const { username, password } = req.body;
+
+  req.session.user = { username: username }; // Set session user
+  res.redirect('/signup'); // Redirect to dashboard after login
+
+});
 
 
 // GET Dashboard Page
