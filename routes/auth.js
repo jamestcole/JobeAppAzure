@@ -67,7 +67,7 @@ router.post('/signup', async function(req, res, next) {
             .query('INSERT INTO Users (Username, Email, PasswordHash) VALUES (@username, @email, @password)');
 
         // Only redirect if the user was successfully created
-        if (userCheck.recordset.length < 0) {
+        if (username && email && password) {
             req.session.user = { username };
             return res.redirect('/signup');
         } else {
@@ -83,7 +83,6 @@ router.post('/signup', async function(req, res, next) {
         }
 
     } catch (err) {
-        // Handle database errors (like the UNIQUE constraint violation)
         console.error('Signup failed:', err);
         return res.render('index', {
             title: 'Login / Sign Up',
@@ -94,7 +93,6 @@ router.post('/signup', async function(req, res, next) {
             opportunities: [] // Add your opportunities data here if needed
         });
     }
-  });
-  
+});
 
 module.exports = router;
