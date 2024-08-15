@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const { poolPromise } = require('../db');
+const { poolPromise, sql } = require('../db');
 
 // Login route
 router.post('/login', async function(req, res, next) {
