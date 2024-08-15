@@ -13,18 +13,15 @@
     <main>
         <section id="auth-form">
             <h2><%= userLoggedIn ? 'Dashboard' : 'Login / Sign Up' %></h2>
-            <form action="<%= userLoggedIn ? '#' : '/auth' %>" method="POST">
-                <!-- Hidden field to distinguish between login and signup -->
-                <input type="hidden" name="action" value="<%= userLoggedIn ? 'dashboard' : 'auth' %>">
-                
+            <form action="/auth" method="POST">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="<%= username %>">
+                <input type="text" id="username" name="username" value="<%= username || '' %>" required>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<%= email %>">
+                <input type="email" id="email" name="email" value="<%= email || '' %>" required>
 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" required>
 
                 <% if (!userLoggedIn) { %>
                     <label for="action-login">
@@ -59,7 +56,7 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 </p>
+        <p>&copy; 2024</p>
     </footer>
     <script src="/javascripts/main.js"></script>
 </body>
