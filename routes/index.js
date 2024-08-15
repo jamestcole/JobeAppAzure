@@ -91,7 +91,17 @@ router.post('/login', async (req, res, next) => {
     next(err); // Forward error to the error handler
   }
 });
+// Route for the signup page
+router.get('/signup', (req, res) => {
+  // Extract data from query parameters
+  const { username, email } = req.query;
 
+  // Render the signup page with pre-filled data
+  res.render('signup', {
+      username: username || '',
+      email: email || ''
+  });
+});
 /* POST signup logic */
 router.post('/signup', async (req, res, next) => {
   try {
