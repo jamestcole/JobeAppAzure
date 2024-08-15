@@ -98,7 +98,7 @@ router.post('/auth', async function (req, res, next) {
             const result = await signupUser(username, email, password);
             if (result.success) {
                 req.session.user = { username: result.username };
-                res.redirect('/dashboard');
+                res.redirect('/signup');
             } else {
                 res.render('index', { 
                     title: 'Login / Sign Up', 
