@@ -12,32 +12,35 @@
     </header>
     <main>
         <section id="auth-form">
-            <h2><%= userLoggedIn ? 'Dashboard' : 'Login / Sign Up' %></h2>
-            <form action="/auth" method="POST">
+            <h2>Login / Sign Up</h2>
+            <form id="authForm" method="POST">
+                <!-- Hidden field to determine form action -->
+                <input type="hidden" id="formAction" name="formAction" value="login">
+                
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="<%= username || '' %>" required>
+                <input type="text" id="username" name="username" required>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<%= email || '' %>" required>
+                <input type="email" id="email" name="email">
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
-                <% if (!userLoggedIn) { %>
-                    <label for="action-login">
-                        <input type="radio" id="action-login" name="actionType" value="login" checked>
-                        Login
-                    </label>
-                    <label for="action-signup">
-                        <input type="radio" id="action-signup" name="actionType" value="signup">
-                        Sign Up
-                    </label>
-                <% } %>
+                <!-- Radio buttons to select action -->
+                <label for="action-login">
+                    <input type="radio" id="action-login" name="actionType" value="login" checked>
+                    Login
+                </label>
+                <label for="action-signup">
+                    <input type="radio" id="action-signup" name="actionType" value="signup">
+                    Sign Up
+                </label>
 
-                <button type="submit"><%= userLoggedIn ? 'Go to Dashboard' : 'Submit' %></button>
+                <button type="submit" id="submitButton">Submit</button>
             </form>
         </section>
-        <!-- Always display opportunities -->
+
+        <!-- Opportunities Section -->
         <section id="opportunities-list">
             <h2>Opportunities</h2>
             <ul>
@@ -56,9 +59,31 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2024</p>
+        <p>&copy; 2024 </p>
     </footer>
-    <script src="/javascripts/main.js"></script>
+    <script>
+        // JavaScript to dynamically set form action
+        document.getElementById('authForm').addEventListener('submit', function(event) {
+            var actionType = document.querySelector('input[name="actionType"]:checked').value;
+            if (actionType === 'signup') {
+                this.action = '/signup';
+            } else {
+                this.action = '/login';
+            }
+        });
+
+        // Hide email field for login
+        document.querySelectorAll('input[name="actionType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'login') {
+                    document.getElementById('email').style.display = 'none';
+                } else {
+                    document.getElementById('email').style.display = 'block';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
 
