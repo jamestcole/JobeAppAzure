@@ -39,10 +39,11 @@ router.post('/signup', async function(req, res, next) {
         const { username } = req.body;
         const pool = await poolPromise;
   
-        // Check if the username already exists
+        // Check if the username or email already exists
         const userCheck = await pool.request()
-            .input('username', username)
-            .query('SELECT * FROM Users WHERE Username = @username');
+            .input('username', sql.NVarChar, username)
+            .input('email', sql.NVarChar, email)
+            .query('SELECT * FROM Users WHERE Username = @username OR Email = @email');
   
         if (userCheck.recordset.length > 0) {
                 // Username already exists
