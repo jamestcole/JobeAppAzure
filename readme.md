@@ -36,6 +36,12 @@ This Learn module deploys a basic app to Azure App Service.
 
     The output contains a URL like: https://<deployment-username>@<app-name>.scm.azurewebsites.net/<app-name>.git. Use this URL to deploy your app in the next step.
 
+    to remove the group and all your resources
+
+    ```
+    az group delete --name <app-name> --yes --no-wait
+    ```
+
 ## Create local git remote to Azure App Service
 
 1. In a local terminal window, change the directory to the root of your Git repository, and add a Git remote using the URL you got from your app. If your chosen method doesn't give you a URL, use https://<app-name>.scm.azurewebsites.net/<app-name>.git with your app name in <app-name>.
@@ -61,3 +67,51 @@ This Learn module deploys a basic app to Azure App Service.
     ```http
     http://<app-name>.azurewebsites.net
     ```
+
+## Upload the SQL data
+
+1. there should be a file .bacpac , which you can download from your sql db containining all of your data, use an uploaddb.bat file to send this data back to the db through the cloud.
+
+```
+@echo off
+setlocal
+
+:: Set variables
+set RESOURCE_GROUP=<>
+set LOCATION=<>
+set BICEP_FILE=<>
+set PARAMETERS_FILE=<>
+set BACPAC_URI=<>
+set STORAGE_ACCOUNT_NAME=j<>
+set CONTAINER_NAME=<>
+set LOCAL_BACPAC_FILE=<>
+set BACPAC_BLOB_NAME=<>
+:: you need to fill this in with your storage account key before running !!!!!!!!!
+set STORAGE_ACCOUNT_KEY=<>
+
+set SQL_SERVER_NAME=<>
+set DATABASE_NAME=<>
+set SQL_ADMIN_USER=<>
+set SQL_ADMIN_PASSWORD=<>
+:: Create blob container if it doesn't exist
+echo Creating blob container %CONTAINER_NAME% if it does not exist...
+az storage container create --name %CONTAINER_NAME% --account-name %STORAGE_ACCOUNT_NAME% --account-key %STORAGE_ACCOUNT_KEY%
+:: Upload .bacpac file to Azure Blob Storage
+echo Uploading .bacpac file to Azure Blob Storage...
+az storage blob upload --account-name %STORAGE_ACCOUNT_NAME% ^
+                        --container-name %CONTAINER_NAME% ^
+                        --name %BACPAC_BLOB_NAME% ^
+                        --file %LOCAL_BACPAC_FILE% ^
+                        --account-key %STORAGE_ACCOUNT_KEY%
+:: Import .bacpac file
+az sql db import --resource-group %RESOURCE_GROUP% ^
+                  --server %SQL_SERVER_NAME% ^
+                  --name %DATABASE_NAME% ^
+                  --storage-uri %BACPAC_URI% ^
+                  --storage-key %STORAGE_ACCOUNT_KEY% ^
+                  --admin-password %SQL_ADMIN_PASSWORD% ^
+                  --admin-user %SQL_ADMIN_USER%
+
+endlocal
+```
+

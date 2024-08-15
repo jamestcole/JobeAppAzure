@@ -43,8 +43,9 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
         }
         {
           name: 'DB_SERVER'
-          value: sqlServer.name
+          value: '${sqlServer.name}.${environment().suffixes.sqlServerHostname}'
         }
+        
         {
           name: 'DB_NAME'
           value: sqlDatabase.name
@@ -54,7 +55,7 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
           value: 'sqladmin' // Or consider retrieving from a secure place
         }
         {
-          name: 'DB_PASS'
+          name: 'DB_PASSWORD'
           value: 'Password123!' // Use a secure method for passwords
         }
       ]

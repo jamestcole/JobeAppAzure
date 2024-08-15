@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { poolPromise, sql } = require('../db'); // Import the database connection pool
 const auth = require('../middleware/auth'); // Import the authentication middleware
-
+const bcrypt = require('bcryptjs');
 /* GET home page with login and opportunities. */
 router.get('/', async function(req, res, next) {
   try {
@@ -15,16 +15,62 @@ router.get('/', async function(req, res, next) {
     // Check if user is logged in
     const userLoggedIn = req.session && req.session.user;
     const userName = userLoggedIn ? req.session.user.username : '';
+    const email = userLoggedIn ? req.session.user.email : ''; // Assuming email is also stored in session
 
-    // Render the view with opportunities data
+    // Render the view with opportunities data and user data
     res.render('index', {
       title: 'Home Page',
       userLoggedIn: !!userLoggedIn, // Boolean indicating if the user is logged in
       userName: userName,
+      email: email, // Pass the email to the view
       opportunities: opportunitiesResult.recordset
     });
   } catch (err) {
     next(err);
+  }
+});
+
+
+// Route for the signup page
+router.get('/signup', (req, res) => {
+  // Extract data from query parameters
+  const { username, email } = req.query;
+
+  // Render the signup page with pre-filled data
+  res.render('signup', {
+      username: username || '',
+      email: email || ''
+  });
+});
+
+/* POST signup logic */
+router.post('/signup', async (req, res, next) => {
+  try {
+    const { username, password, age, sex, status } = req.body;
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Get a connection from the pool
+    const pool = await poolPromise;
+
+    // Insert new user into the database
+    await pool.request()
+      .input('Username', sql.NVarChar, username)
+      .input('Password', sql.NVarChar, hashedPassword)
+      .input('Age', sql.Int, age)
+      .input('Sex', sql.NVarChar, sex)
+      .input('Status', sql.NVarChar, status)
+      .query(`
+        INSERT INTO Users (Username, Password, Age, Sex, Status)
+        VALUES (@Username, @Password, @Age, @Sex, @Status)
+      `);
+
+    // Redirect to login page after successful signup
+    res.redirect('/Signup');
+  } catch (err) {
+    console.error('Signup failed:', err);
+    next(err); // Forward error to the error handler
   }
 });
 // POST Login Logic

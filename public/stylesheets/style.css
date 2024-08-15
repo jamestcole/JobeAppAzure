@@ -21,7 +21,6 @@ header h1 {
   font-size: 24px;
 }
 
-
 h1, h2, h3 {
   font-family: 'Georgia', serif;
   color: #333;
@@ -103,6 +102,8 @@ li {
   align-items: center;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
+
+/* Adjust main content styling */
 /* Adjust main content styling */
 main {
   max-width: 960px;
@@ -112,6 +113,19 @@ main {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+/* Flex container for forms */
+.forms-container {
+  display: flex;
+  gap: 20px; /* Gap between forms */
+  flex-wrap: wrap; /* Ensure forms wrap on smaller screens */
+}
+/* Style for form sections to ensure they have equal width */
+#login-form, #signup-form {
+  flex: 1; /* Make forms take up equal space */
+  max-width: 45%; /* Ensure forms do not exceed 45% of the main container width */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
 
 li img {
   width: 80px;
@@ -214,4 +228,33 @@ form button:hover {
 
 .dashboard-buttons a:hover {
   background-color: #003d7a; /* Darker blue for hover */
+}
+/* Ensure opportunities list is below the forms */
+#opportunities-list {
+  margin-top: 20px; /* Space above the opportunities list */
+}
+/* Opportunities List */
+#opportunities-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+#opportunities-list li {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+#opportunities-list img {
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+#opportunities-list h3 {
+  margin: 0 0 10px;
+  color: #0073e6;
 }

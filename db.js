@@ -1,4 +1,5 @@
 const sql = require('mssql');
+require('dotenv').config(); // Load environment variables from .env file
 
 // Configuration for the SQL database
 const config = {

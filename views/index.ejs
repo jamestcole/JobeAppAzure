@@ -11,6 +11,7 @@
         <h1><%= title %></h1>
     </header>
     <main>
+        <div class="forms-container">
         <% if (!userLoggedIn) { %>
             <!-- Display login form if the user is not logged in -->
             <section id="login-form">
@@ -19,6 +20,15 @@
                     <input type="text" name="username" placeholder="Username" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <button type="submit">Login</button>
+                </form>
+            </section>
+            <section id="signup-form">
+                <h2>Sign Up</h2>
+                <form action="/signup" method="GET">
+                    <input type="hidden" name="username" value="<%= userName %>">
+                    <input type="hidden" name="email" value="<%= email %>">
+                    <button type="submit">Go to Signup</button>
+                </form>
                 </form>
             </section>
         <% } else { %>
@@ -33,7 +43,7 @@
                 </nav>
             </section>
         <% } %>
-        
+        </div>
         <!-- Always display opportunities -->
         <section id="opportunities-list">
             <h2>Opportunities</h2>
@@ -53,7 +63,7 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 Your Company</p>
+        <p>&copy; 2024 </p>
     </footer>
     <script src="/javascripts/main.js"></script>
 </body>
