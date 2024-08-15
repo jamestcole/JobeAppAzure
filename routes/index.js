@@ -57,7 +57,7 @@ router.post('/signup', async (req, res, next) => {
       `);
 
     // Redirect to login page after successful signup
-    res.redirect('/login');
+    res.redirect('/Signup');
   } catch (err) {
     console.error('Signup failed:', err);
     next(err); // Forward error to the error handler
