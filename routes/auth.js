@@ -36,46 +36,35 @@ router.post('/login', async function(req, res, next) {
 
 router.post('/signup', async function(req, res, next) {
     try {
-      const { username, email, password } = req.body;
-      const pool = await poolPromise;
+        const { username } = req.body;
+        const pool = await poolPromise;
   
-      // Check if the username or email already exists
-      const userCheck = await pool.request()
-        .input('username', username)
-        .input('email', email)
-        .query('SELECT * FROM Users WHERE Username = @username OR Email = @email');
+        // Check if the username already exists
+        const userCheck = await pool.request()
+            .input('username', username)
+            .query('SELECT * FROM Users WHERE Username = @username');
   
-      if (userCheck.recordset.length > 0) {
-        // Username or email already exists
-        return res.render('index', {
-          title: 'Login / Sign Up',
-          error: 'Username or email already exists',
+        if (userCheck.recordset.length > 0) {
+                // Username already exists
+            return res.render('index', {
+                title: 'Login / Sign Up',
+                error: 'Username already exists. Please choose another username.',
+                username,
+                email: '',  // Email left empty since this check is before email input
+                userLoggedIn: false,
+                opportunities: [] 
+            });
+        }
+        // Optionally, you can start a session or handle as needed
+        req.session.user = { username };
+        // Username doesn't exist, render signup page
+        res.render('signup', {
+          title: 'Complete Your Registration',
           username,
-          email,
-          userLoggedIn: false,
-          opportunities: [] 
+          email: '',  // Email can be left empty or passed from index.ejs if available
         });
-      }
-  
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      // Insert the new user into the database
-      await pool.request()
-        .input('username', username)
-        .input('email', email)
-        .input('password', hashedPassword)
-        .query('INSERT INTO Users (Username, Email, PasswordHash) VALUES (@username, @email, @password)');
-  
-      // Optionally, you can start a session or handle as needed
-      req.session.user = { username };
-  
       // Render the signup.ejs page
-      res.render('signup', { 
-        title: 'Welcome!', 
-        username,
-        email 
-      });
+
     } catch (err) {
       next(err);
     }
