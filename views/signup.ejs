@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <link rel="stylesheet" href="/stylesheets/signup.css">
 </head>
 <body>
     <h1>Sign Up</h1>
@@ -25,5 +26,25 @@
 
         <button type="submit">Sign Up</button>
     </form>
+
+    <!-- Script to pre-fill form data if available -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fetch query parameters from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            const password = urlParams.get('password');
+            const age = urlParams.get('age');
+            const sex = urlParams.get('sex');
+            const status = urlParams.get('status');
+
+            // Pre-fill form fields if parameters are available
+            if (username) document.getElementById('username').value = username;
+            if (password) document.getElementById('password').value = password;
+            if (age) document.getElementById('age').value = age;
+            if (sex) document.getElementById('sex').value = sex;
+            if (status) document.getElementById('status').value = status;
+        });
+    </script>
 </body>
 </html>
