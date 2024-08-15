@@ -75,7 +75,7 @@ indexRouter.post('/signup', async (req, res, next) => {
       `);
 
     // Redirect or send response on successful signup
-    res.redirect('/login'); // Redirect to login page after signup
+    res.redirect('/signup'); // Redirect to login page after signup
   } catch (err) {
     console.error('Signup failed:', err);
     next(err); // Forward error to the error handler
