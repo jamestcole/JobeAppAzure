@@ -11,39 +11,35 @@
         <h1><%= title %></h1>
     </header>
     <main>
-        <div class="forms-container">
-        <% if (!userLoggedIn) { %>
-            <!-- Display login form if the user is not logged in -->
-            <section id="login-form">
-                <h2>Login</h2>
-                <form action="/login" method="post">
-                    <input type="text" name="username" placeholder="Username" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <button type="submit">Login</button>
-                </form>
-            </section>
-            <section id="signup-form">
-                <h2>Sign Up</h2>
-                <form action="/signup" method="GET">
-                    <input type="hidden" name="username" value="<%= userName %>">
-                    <input type="hidden" name="email" value="<%= email %>">
-                    <button type="submit">Go to Signup</button>
-                </form>
-                </form>
-            </section>
-        <% } else { %>
-            <!-- Display user dashboard if logged in -->
-            <section id="user-dashboard">
-                <p>Welcome, <%= userName %>!</p>
-                <nav>
-                    <a href="/opportunities">View Opportunities</a>
-                    <a href="/applications">Your Applications</a>
-                    <a href="/listings">Your Listings</a>
-                    <a href="/create-opportunity">Create New Opportunity</a>
-                </nav>
-            </section>
-        <% } %>
-        </div>
+        <section id="auth-form">
+            <h2><%= userLoggedIn ? 'Dashboard' : 'Login / Sign Up' %></h2>
+            <form action="<%= userLoggedIn ? '#' : '/auth' %>" method="POST">
+                <!-- Hidden field to distinguish between login and signup -->
+                <input type="hidden" name="action" value="<%= userLoggedIn ? 'dashboard' : 'auth' %>">
+                
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="<%= username %>" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="<%= email %>" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <% if (!userLoggedIn) { %>
+                    <label for="action-login">
+                        <input type="radio" id="action-login" name="actionType" value="login" checked>
+                        Login
+                    </label>
+                    <label for="action-signup">
+                        <input type="radio" id="action-signup" name="actionType" value="signup">
+                        Sign Up
+                    </label>
+                <% } %>
+
+                <button type="submit"><%= userLoggedIn ? 'Go to Dashboard' : 'Submit' %></button>
+            </form>
+        </section>
         <!-- Always display opportunities -->
         <section id="opportunities-list">
             <h2>Opportunities</h2>
